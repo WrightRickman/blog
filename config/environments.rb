@@ -10,16 +10,12 @@ configure :development do
 end
 
 configure :production do
-  # HEROKU CONFIG 
-  db = URI.parse(ENV['HEROKU_POSTGRESQL_ORANGE_URL'])
-  #configuration info
-  ActiveRecord::Base.establish_connection(
-      :adapter => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
-      :host     => 'ec2-54-204-45-126.compute-1.amazonaws.com'
-      :username => 'khljfdxdwrzipg'
-      :password => 'W0eTdv3EqYrBXNB_NjXmGn0Tx3'
-      :database => 'da1dqis9usm2ja'
-      :encoding => 'utf8'
-      :port => '5432'
+ActiveRecord::Base.establish_connection(
+    adapter: "postgresql",
+    host: "ec2-54-204-45-126.compute-1.amazonaws.com",
+    username: "khljfdxdwrzipg",
+    password: "W0eTdv3EqYrBXNB_NjXmGn0Tx3",
+    database: "da1dqis9usm2ja",
+    port: "5432"
   )
 end
