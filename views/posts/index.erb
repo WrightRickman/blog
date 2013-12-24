@@ -16,16 +16,20 @@
     </li>
   <% end %>
   <form action="/posts/create" method="POST" class="post_new">
-    <p>Title:<br><br />
+    <p>Title:<br>
       <input type="text" name="title" />
     <% if @username %>
       <input type="hidden" name="username" value="<%= @username %>" />
     <% else %>
       <input type="hidden" name="username" value="anonymous" />
     <% end %>
+    <br />
     Body:<br />
       <textarea name="body"></textarea>
     </p>
+    <input type="radio" name="codegroup" value="text" checked>Text<br>
+    <input type="radio" name="codegroup" value="ruby">Ruby<br>
+    <input type="radio" name="codegroup" value="html">HTML<br>
     <input type="submit" value="Post" />
   </form>
 

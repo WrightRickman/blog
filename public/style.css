@@ -54,3 +54,8 @@ body {
   padding: 10px;
   margin: 10px;
 }
+
+.CodeRay {
+  border: 4px solid black;
+  background-color: white;
+}

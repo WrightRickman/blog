@@ -1,6 +1,37 @@
+# Code Blog
+
+# Make a Code Blog using the following specs:
+
+# The Code Blog should be hosted on Heroku and be publicly accessible by anyone else that knows the URL.
+# The "/" and "/posts" route should display all posts.
+# There should also be additional routes for Editing, Creating and Deleting posts available to one designated User.
+# Newest posts should be visible at the top.
+# Each post should be in a DIV with the class "block_overflow" (additional classes can be included)
+# <div class="block_overflow post">
+#     <h1>Title of Post Goes Here</h1>
+#     <p>Body of Post Goes here</p>
+# </div>
+
+# Posts must accept syntax-highlighted code in their bodies as an option in addition to plain-text bodies. Please use the CodeRay Gem for generating syntax highlighted code:
+# Code Ray Gem
+
+
+
+# When you are done, register your blog with with the BlockOverflow feed:
+
+
+# BONUS CHALLENGE:
+
+# Make BlockOverflow better by Forking the project and sending us a Pull Request:
+
+# BlockOverflow Source Code
+
+
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
+require 'sinatra/reloader'
+require 'coderay'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 # configures the database
@@ -70,6 +101,7 @@ post '/posts/create' do
   @username = params[:username]
   title = params[:title]
   body = params[:body]
+  @codegroup = params[:codegroup]
   # user_id = params[:user_id].to_i
   # create_new_post(title, body)
   # user = User.find(user_id)
@@ -82,6 +114,12 @@ post '/posts/create' do
     user = User.where("username='anonymous'")
   end
 
+  if @codegroup == "ruby"
+    body = CodeRay.scan("#{body}", :ruby).div(:line_numbers => :table)
+  elsif @codegroup == "html"
+    body = CodeRay.scan("#{body}", :html).div(:line_numbers => :table)
+  end
+    
   Post.create(title: title, body: body, user: user)
   redirect '/posts'
 end
@@ -135,10 +173,17 @@ post "/comments/create" do
   body = params[:body]
   username = params[:username]
   post_id = params[:post_id].to_i
+  @codegroup = params[:codegroup]
   user = User.find_by_username(username) 
   # a tiny bit of validation
   user ||= User.find_by_username("anonymous")
   post = Post.find(post_id)
+
+  if @codegroup == "ruby"
+    body = CodeRay.scan("#{body}", :ruby).div(:line_numbers => :table)
+  elsif @codegroup == "html"
+    body = CodeRay.scan("#{body}", :html).div(:line_numbers => :table)
+  end
 
   Comment.create(body: body, user: user, post: post)
   redirect "/post/#{post_id}"
