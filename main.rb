@@ -3,7 +3,7 @@
 # Make a Code Blog using the following specs:
 
 # The Code Blog should be hosted on Heroku and be publicly accessible by anyone else that knows the URL.
-# The "/" and "/posts" route should display all posts.
+# 
 # There should also be additional routes for Editing, Creating and Deleting posts available to one designated User.
 # Newest posts should be visible at the top.
 # Each post should be in a DIV with the class "block_overflow" (additional classes can be included)
@@ -12,19 +12,9 @@
 #     <p>Body of Post Goes here</p>
 # </div>
 
-# Posts must accept syntax-highlighted code in their bodies as an option in addition to plain-text bodies. Please use the CodeRay Gem for generating syntax highlighted code:
-# Code Ray Gem
-
-
-
-# When you are done, register your blog with with the BlockOverflow feed:
-
-
 # BONUS CHALLENGE:
 
 # Make BlockOverflow better by Forking the project and sending us a Pull Request:
-
-# BlockOverflow Source Code
 
 
 require 'sinatra'
@@ -32,6 +22,7 @@ require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
 require 'sinatra/reloader'
 require 'coderay'
+require 'pry'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 # configures the database
@@ -51,6 +42,8 @@ set :environment, :production
 get '/' do 
   @username = session[:username] if session[:username]
   erb :home
+
+  redirect '/posts'
 end
 
 # Posts Routes
@@ -119,7 +112,7 @@ post '/posts/create' do
   elsif @codegroup == "html"
     body = CodeRay.scan("#{body}", :html).div(:line_numbers => :table)
   end
-    
+
   Post.create(title: title, body: body, user: user)
   redirect '/posts'
 end
@@ -136,7 +129,11 @@ get '/users/sign_in' do
   erb :"users/sign_in"
 end
 
-# Ethan's HTTP method handler
+get '/users/log_out' do
+  @username = session.clear
+  redirect '/'
+end
+
 post '/users/create' do
   @username = session[:username] if session[:username]
   first_name = params[:first_name]
@@ -179,12 +176,6 @@ post "/comments/create" do
   user ||= User.find_by_username("anonymous")
   post = Post.find(post_id)
 
-  if @codegroup == "ruby"
-    body = CodeRay.scan("#{body}", :ruby).div(:line_numbers => :table)
-  elsif @codegroup == "html"
-    body = CodeRay.scan("#{body}", :html).div(:line_numbers => :table)
-  end
-
   Comment.create(body: body, user: user, post: post)
   redirect "/post/#{post_id}"
 end
@@ -204,4 +195,6 @@ post '/sessions/create' do
 
   session[:username] = username
   redirect "/"
+
+  binding.pry
 end

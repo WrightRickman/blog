@@ -3,18 +3,27 @@
 <head>
   <title>Simple Blog</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
+  <div id="navbar">
 <nav>
   <a href="/">home</a>
   <a href="/posts">posts</a>
   <% if @username %>
   <span> Welcome, <%= @username %></span>
+    <a href="/users/log_out">log out</a>
   <% else %>
     <a href="/users/new">register</a>
     <a href="/users/sign_in">login</a>
   <% end %>
 </nav>
+</div>
+
+<div class = "content">
   <%= yield %>
+</div>
+
 </body>
 </html>
