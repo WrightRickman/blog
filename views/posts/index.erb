@@ -1,4 +1,5 @@
 <div id="main_container">
+  <div class="block_overflow">
   <ul id="posts">
     <% @posts.each do |post| %>
     <li class="post">
@@ -21,6 +22,7 @@
         <% end %>
     </li>
     <% end %>
+  </div>
     <form action="/posts/create" method="POST" class="post_new">
         <input type="text" name="title" placeholder="Title"/>
         <% if @username %>
