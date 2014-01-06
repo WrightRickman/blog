@@ -3,19 +3,12 @@
 # Make a Code Blog using the following specs:
 
 # The Code Blog should be hosted on Heroku and be publicly accessible by anyone else that knows the URL.
-# 
-# There should also be additional routes for Editing, Creating and Deleting posts available to one designated User.
 # Newest posts should be visible at the top.
 # Each post should be in a DIV with the class "block_overflow" (additional classes can be included)
 # <div class="block_overflow post">
 #     <h1>Title of Post Goes Here</h1>
 #     <p>Body of Post Goes here</p>
 # </div>
-
-# BONUS CHALLENGE:
-
-# Make BlockOverflow better by Forking the project and sending us a Pull Request:
-
 
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -141,25 +134,6 @@ post '/users/create' do
   username = params[:username].downcase
   bio = params[:bio]
   user = User.create(first_name: first_name, last_name: last_name, username: username, bio: bio)
-  
-  # Matt P.'s Way
-
-  # user = User.new
-  # user.first_name = params[:first_name]
-  # user.last_name = params[:last_name]
-  # user.username = params[:username].downcase
-  # user.bio = params[:bio]
-  # user.save!
-
-  # Yet another Way:
-
-  # user = {}
-  # user[:first_name] = params[:first_name]
-  # user[:last_name] = params[:last_name]
-  # user[:username] = params[:username].downcase
-  # user[:bio] = params[:bio]
-  # User.create(user)
-
 
   redirect '/'
 end

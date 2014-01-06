@@ -1,12 +1,13 @@
 <div id="main_container">
-  <h1 class="main_heading">Posts</h1>
   <ul id="posts">
     <% @posts.each do |post| %>
     <li class="post">
       <h2 class="post_title"><a href="/post/<%= post['id'] %>"><%= post['title'] %></a></h2>
       <p>by <%= post.user.username %> </p>
       <p>created at <%= post.created_at %> </p>
+      <div class = "postbody">
       <p class="post_body"><%= post['body'] %></p>
+      </div>
 
       <% if post.user.username == "#{session[:username]}" %>
         <form action="/posts/delete/<%= post['id'] %>" method="POST">
@@ -21,21 +22,41 @@
     </li>
     <% end %>
     <form action="/posts/create" method="POST" class="post_new">
-      <p>Title:<br>
-        <input type="text" name="title" />
+        <input type="text" name="title" placeholder="Title"/>
         <% if @username %>
         <input type="hidden" name="username" value="<%= @username %>" />
         <% else %>
         <input type="hidden" name="username" value="anonymous" />
         <% end %>
         <br />
-        Body:<br />
-        <textarea name="body"></textarea>
+        <textarea name="body" placeholder="Body"></textarea>
       </p>
-      <input type="radio" name="codegroup" value="text" checked>Text<br>
-      <input type="radio" name="codegroup" value="ruby">Ruby<br>
-      <input type="radio" name="codegroup" value="html">HTML<br>
+
+      <input type="radio" name="codegroup" value="text" checked class="radio">Text<br>
+      <input type="radio" name="codegroup" value="ruby" class="radio">Ruby<br>
+      <input type="radio" name="codegroup" value="html" class="radio">HTML<br>
       <input type="submit" value="Post" />
     </form>
 
+<div id="hexes">
+  <div id = "hexgroup1">
+    <div class="hex1">
+      <div class="hextop"></div>
+      <div class="hexmid"></div>
+      <div class="hexbottom"> </div>
+    </div>
+
+    <div class="hex2">
+      <div class="hextop"></div>
+      <div class="hexmid"></div>
+      <div class="hexbottom"> </div>
+    </div>
+
+    <div class="hex3">
+      <div class="hextop"></div>
+      <div class="hexmid"></div>
+      <div class="hexbottom"> </div>
+    </div>
+  </div>
+</div>
   </div>
