@@ -1,13 +1,13 @@
-configure :development do 
-  # establishes our connection to the DB and other settings
-  ActiveRecord::Base.establish_connection(
-      :adapter => "postgresql",
-      :host => "localhost",
-      :username => "Wright",
-      :database => "simple_blog2",
-      :encoding => "utf8"
-    )
-end
+# configure :development do 
+#   # establishes our connection to the DB and other settings
+#   ActiveRecord::Base.establish_connection(
+#       :adapter => "postgresql",
+#       :host => "localhost",
+#       :username => "Wright",
+#       :database => "simple_blog2",
+#       :encoding => "utf8"
+#     )
+# end
 
 configure :production do
 ActiveRecord::Base.establish_connection(

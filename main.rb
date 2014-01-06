@@ -5,7 +5,7 @@
 # The Code Blog should be hosted on Heroku and be publicly accessible by anyone else that knows the URL.
 # Newest posts should be visible at the top.
 # Each post should be in a DIV with the class "block_overflow" (additional classes can be included)
-# <div class="block_overflow post">
+# <div class="block_overflow" post">
 #     <h1>Title of Post Goes Here</h1>
 #     <p>Body of Post Goes here</p>
 # </div>
@@ -13,7 +13,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
-require 'sinatra/reloader'
+# require 'sinatra/reloader'
 require 'coderay'
 require 'pry'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
